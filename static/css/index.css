@@ -1,0 +1,183 @@
+.header-upper {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+* {
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  background: #f0f0f0;
+  font-family: 'Rockwell Std';
+  font-weight: 100;
+  font-size: 14px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  justify-content: center;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Gotham Ultra';
+}
+.tweets {
+  width: 400px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  margin-bottom: 20px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.tweets .tweet {
+  border-bottom: 1px solid #ddd;
+  padding: 10px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  width: 100%;
+  cursor: pointer;
+}
+.tweets .tweet:hover {
+  background: #fafafa;
+}
+.tweets .tweet:last-child {
+  border: none;
+}
+.tweets .tweet .tweet-img {
+  max-height: 200px;
+  overflow-y: hidden;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-top: 4px;
+}
+.tweets .tweet .tweet-img img {
+  width: 100%;
+}
+.tweets .tweet .avatar {
+  margin-right: 10px;
+  border-radius: 5px;
+  overflow: hidden;
+  width: 40px;
+  height: 40px;
+}
+.tweets .tweet .avatar img {
+  width: 100%;
+}
+.tweets .tweet .tweet-content {
+  flex: 1;
+}
+.tweets .tweet .tweet-text {
+  margin: 0;
+}
+.tweets .tweet .user {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 3px;
+}
+.tweets .tweet .user .tweet-date {
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.tweets .tweet .user .name {
+  font-size: 14px;
+  margin: 0;
+  margin-right: 10px;
+}
+.tweets .tweet .user .name a {
+  color: #333331;
+}
+.tweets .tweet .user .username {
+  margin: 0;
+  color: #666661;
+  font-weight: 500;
+  font-size: 12px;
+}
+.new-tweet .new-tweet-icon {
+  width: 30px;
+  height: 30px;
+}
+.new-tweet-modal {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+}
+.new-tweet-modal .new-tweet-text {
+  width: 300px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+.new-tweet-modal-footer {
+  margin-top: 10px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.tweet-footer {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 20px;
+  margin-top: 4px;
+}
+.favorite {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-items: center;
+  width: 40px;
+  height: 60px;
+}
+.favorite .favorite-icon {
+  fill: #ca232f;
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+  transition: height 300ms ease, height 300ms ease, margin 300ms;
+}
+.favorite .favorite-icon.on {
+  width: 40px;
+  height: 40px;
+  margin-left: -1px;
+  margin-top: -5px;
+  margin-bottom: 0px;
+}
+.retweet {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.retweet .retweet-icon {
+  fill: #777;
+  width: 30px;
+  height: 30px;
+}
+.retweet .retweet-icon.retweeted {
+  fill: #333;
+}
+.reply {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  align-items: center;
+}
+.reply .reply-icon {
+  fill: #777;
+  width: 30px;
+  height: 30px;
+}

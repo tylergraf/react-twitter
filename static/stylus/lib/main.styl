@@ -1,0 +1,89 @@
+*
+  -webkit-font-smoothing: antialiased;
+
+body {
+  background: #f0f0f0
+  font-family: 'Rockwell Std'
+  font-weight: 100
+	font-size: 14px
+  layout()
+  horizontal()
+  justified-center()
+}
+h1,
+h2,
+h3,
+h4
+  font-family: 'Gotham Ultra'
+
+.tweets
+  width: 400px
+  border: 1px solid #ddd
+  border-radius: 4px
+  background: #fff
+  margin-bottom: 20px
+  layout()
+  vertical()
+  center()
+
+  .tweet
+    border-bottom: 1px solid #ddd
+    padding: 10px
+    layout()
+    horizontal()
+    width: 100%
+    cursor:pointer
+    &:hover
+      background: #fafafa
+
+    &:last-child
+      border: none
+
+    .tweet-img
+      max-height: 200px
+      overflow-y: hidden
+      border: 1px solid #ddd
+      border-radius: 4px
+      margin-top: 4px
+      img
+        width: 100%
+
+    .avatar
+      margin-right: 10px
+      border-radius: 5px
+      overflow: hidden
+      width: 40px
+      height: 40px
+      img
+        width: 100%
+
+    .tweet-content
+      flex()
+
+    .tweet-text
+      margin: 0
+
+    .user
+      layout()
+      horizontal()
+      center()
+      margin-bottom: 3px
+
+      .tweet-date
+        flex()
+        text-overflow: ellipsis
+        overflow: hidden
+        white-space: nowrap
+
+      .name
+        font-size: 14px
+        margin: 0
+        margin-right: 10px
+        a
+          color: #333331
+
+      .username
+        margin: 0
+        color: #666661
+        font-weight: 500
+        font-size: 12px
