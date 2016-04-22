@@ -8,6 +8,7 @@ import Moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
 import {TiArrowBack} from 'react-icons/lib/ti';
+import AppActions from '../../actions/app-actions';
 
 const customStyles = {
   content : {
@@ -39,6 +40,17 @@ export default class Tweet extends Component {
 
   closeModal() {
     this.setState({modalIsOpen: false});
+  }
+
+  likeTweet(evt){
+    evt.stopPropagation();
+    ReactTooltip.hide();
+    AppActions.likeTweet(this.props.tweet.id_str);
+  }
+  unlikeTweet(evt){
+    evt.stopPropagation();
+    ReactTooltip.hide();
+    AppActions.unlikeTweet(this.props.tweet.id_str);
   }
   render() {
     const { text, user, created_at, extended_entities} = this.props.tweet;
@@ -78,7 +90,7 @@ export default class Tweet extends Component {
             <div className="reply">
               <TiArrowBack className="reply-icon" data-tip="Reply to this tweet"/>
             </div>
-            <Favorite tweet={this.props.tweet} />
+            <Favorite likeHandler={this.likeTweet.bind(this)} unlikeHandler={this.unlikeTweet.bind(this)} tweet={this.props.tweet} />
             <Retweet tweet={this.props.tweet} />
 
             <Modal

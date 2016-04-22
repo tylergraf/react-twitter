@@ -66,15 +66,69 @@ const AppStore = Object.assign(EventEmitter.prototype, {
         break;
 
       case AppConstants.LIKE_TWEET:
-        console.log('like tweet');
+        _tweets.forEach(tweet => {
+          if(tweet.id_str === payload.id){
+            tweet.favorited = true;
+            tweet.favorite_count++;
+          }
+        });
+        TwitterAPI.likeTweet(payload.id)
+          .then(tweet => {
+            dispatch({actionType: AppConstants.api.UPDATE_TWEET, tweet});
+          }).catch(err => console.log(err))
+
         break;
 
       case AppConstants.UNLIKE_TWEET:
-      console.log('unlike tweet');
+        _tweets.forEach(tweet => {
+          if(tweet.id_str === payload.id){
+            tweet.favorited = false;
+            tweet.favorite_count--;
+          }
+        });
+        TwitterAPI.unlikeTweet(payload.id)
+          .then(tweet => {
+            dispatch({actionType: AppConstants.api.UPDATE_TWEET, tweet});
+          }).catch(err => console.log(err))
+        break;
+      case AppConstants.RETWEET_TWEET:
+        _tweets.forEach(tweet => {
+          if(tweet.id_str === payload.id){
+            tweet.retweeted = true;
+            tweet.retweet_count++;
+          }
+        });
+        TwitterAPI.retweetTweet(payload.id)
+          .then(tweet => {
+            dispatch({actionType: AppConstants.api.UPDATE_TWEET, tweet});
+          }).catch(err => console.log(err))
+
+        break;
+
+      case AppConstants.UNRETWEET_TWEET:
+        _tweets.forEach(tweet => {
+          if(tweet.id_str === payload.id){
+            tweet.retweeted = false;
+            tweet.retweet_count--;
+          }
+        });
+        TwitterAPI.unretweetTweet(payload.id)
+          .then(tweet => {
+            dispatch({actionType: AppConstants.api.UPDATE_TWEET, tweet});
+          }).catch(err => console.log(err))
         break;
       case AppConstants.api.RECEIVE_TWEETS:
 
         _tweets = payload.tweets.concat(_tweets);
+        sessionStorage.setItem('tweets', JSON.stringify(_tweets));
+        break;
+      case AppConstants.api.UPDATE_TWEET:
+        _tweets.forEach(t => {
+          if(t.id_str === payload.tweet.id_str){
+            Object.assign(t, payload.tweet);
+          }
+        });
+
         sessionStorage.setItem('tweets', JSON.stringify(_tweets));
         break;
     }

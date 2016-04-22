@@ -32,12 +32,19 @@ const CartAPI = {
         .catch(err => reject(err))
       });
     },
-    cartTotals( qty = 0, total = 0 ){
-        this.cartItems.forEach( cartItem  => {
-            qty += cartItem.qty;
-            total += cartItem.qty * cartItem.cost;
-        } );
-        return {qty, total};
+    likeTweet(id){
+      return new Promise((resolve, reject)=>{
+        axios.post(`/api/favorite/${id}`)
+        .then(data => resolve(data.data))
+        .catch(err => reject(err))
+      });
+    },
+    unlikeTweet(id){
+      return new Promise((resolve, reject)=>{
+        axios.delete(`/api/favorite/${id}`)
+        .then(data => resolve(data.data))
+        .catch(err => reject(err))
+      });
     },
     getCatalog(){
         return this.catalog.map(item => {
