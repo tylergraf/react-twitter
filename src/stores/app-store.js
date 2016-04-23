@@ -100,6 +100,7 @@ const AppStore = Object.assign(EventEmitter.prototype, {
         });
         TwitterAPI.retweetTweet(payload.id)
           .then(tweet => {
+            console.log(tweet.retweeted);
             dispatch({actionType: AppConstants.api.UPDATE_TWEET, tweet});
           }).catch(err => console.log(err))
 

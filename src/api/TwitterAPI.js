@@ -1,4 +1,9 @@
-import axios from 'axios'
+import axios from 'axios';
+import * as url from 'url';
+import qs from 'query-string';
+
+const twitterBase = `${window.location.origin}/api/proxy`;
+
 
 const CartAPI = {
     catalog: [],
@@ -25,23 +30,37 @@ const CartAPI = {
             this.increaseItem( cartItem );
         }
     },
-    getTweets(sinceId){
+    getTweets(since_id, max_id, count = 10){
       return new Promise((resolve, reject)=>{
-        axios.get(`/api/homeTimeline?sinceId=${sinceId}`)
+        axios.get(createURL('/statuses/home_timeline',{since_id,max_id,count}))
         .then(data => resolve(data.data))
         .catch(err => reject(err))
       });
     },
     likeTweet(id){
       return new Promise((resolve, reject)=>{
-        axios.post(`/api/favorite/${id}`)
+        axios.post(createURL('/favorites/create', {id}))
         .then(data => resolve(data.data))
         .catch(err => reject(err))
       });
     },
     unlikeTweet(id){
       return new Promise((resolve, reject)=>{
-        axios.delete(`/api/favorite/${id}`)
+        axios.post(createURL('/favorites/destroy',{id}))
+        .then(data => resolve(data.data))
+        .catch(err => reject(err))
+      });
+    },
+    retweetTweet(id){
+      return new Promise((resolve, reject)=>{
+        axios.post(createURL('/statuses/retweet',{id}))
+        .then(data => resolve(data.data))
+        .catch(err => reject(err))
+      });
+    },
+    unretweetTweet(id){
+      return new Promise((resolve, reject)=>{
+        axios.post(createURL('/statuses/unretweet',{id}))
         .then(data => resolve(data.data))
         .catch(err => reject(err))
       });
@@ -66,3 +85,9 @@ const CartAPI = {
 
 CartAPI.init();
 export default CartAPI;
+
+function createURL(path, params){
+  var tURL = url.parse(`${twitterBase}${path}`);
+  tURL.search = qs.stringify(params);
+  return tURL.format();
+}

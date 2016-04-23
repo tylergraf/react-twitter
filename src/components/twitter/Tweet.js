@@ -52,6 +52,16 @@ export default class Tweet extends Component {
     ReactTooltip.hide();
     AppActions.unlikeTweet(this.props.tweet.id_str);
   }
+  retweetTweet(evt){
+    evt.stopPropagation();
+    ReactTooltip.hide();
+    AppActions.retweetTweet(this.props.tweet.id_str);
+  }
+  unretweetTweet(evt){
+    evt.stopPropagation();
+    ReactTooltip.hide();
+    AppActions.unretweetTweet(this.props.tweet.id_str);
+  }
   render() {
     const { text, user, created_at, extended_entities} = this.props.tweet;
 
@@ -91,7 +101,7 @@ export default class Tweet extends Component {
               <TiArrowBack className="reply-icon" data-tip="Reply to this tweet"/>
             </div>
             <Favorite likeHandler={this.likeTweet.bind(this)} unlikeHandler={this.unlikeTweet.bind(this)} tweet={this.props.tweet} />
-            <Retweet tweet={this.props.tweet} />
+            <Retweet retweetHandler={this.retweetTweet.bind(this)} unretweetHandler={this.unretweetTweet.bind(this)} tweet={this.props.tweet} />
 
             <Modal
               isOpen={this.state.modalIsOpen}
