@@ -30,7 +30,14 @@ const CartAPI = {
             this.increaseItem( cartItem );
         }
     },
-    getTweets(since_id, max_id, count = 10){
+    writeTweet(status, in_reply_to_status_id){
+      return new Promise((resolve, reject)=>{
+        axios.post(createURL('/statuses/update',{status, in_reply_to_status_id}))
+        .then(data => resolve(data.data))
+        .catch(err => reject(err))
+      });
+    },
+    getTweets(since_id, max_id, count = 200){
 
       return new Promise((resolve, reject)=>{
         axios.get(createURL('/statuses/home_timeline',{since_id,max_id,count}))

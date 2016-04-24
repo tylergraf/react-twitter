@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import {newTweet} from '../../api/helpers';
+import AppActions from '../../actions/app-actions';
 import ReactTooltip from 'react-tooltip';
-import {TiEdit} from 'react-icons/lib/ti';
+import {TiEdit, TiArrowBack} from 'react-icons/lib/ti';
 import Modal from 'react-modal';
 
 const customStyles = {
@@ -15,7 +15,7 @@ const customStyles = {
     transform             : 'translate(-50%, -50%)'
   }
 };
-export default class NewTweet extends Component {
+export default class WriteTweet extends Component {
   constructor(props){
     super(props);
 
@@ -23,41 +23,34 @@ export default class NewTweet extends Component {
       modalIsOpen: false
     }
 
-    this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
-    this.getNewTweetValue = this.getNewTweetValue.bind(this);
+    this.getWriteTweetValue = this.getWriteTweetValue.bind(this);
     this.handleTweet = this.handleTweet.bind(this);
   }
 
   handleTweet(evt){
     evt.stopPropagation();
-    let tweet = this.getNewTweetValue();
-    console.log(tweet);
+    let tweet = this.getWriteTweetValue();
 
-    newTweet(tweet)
-      .then((tweet)=>{
-        console.log(tweet);
-      })
-      .catch((err)=>{
-        console.log(err);
-      });
-
+    AppActions.writeTweet(tweet, this.props.replyTweet.id_str);
+    this.closeModal()
   }
 
-  getNewTweetValue() {
-    return this.refs.newTweet.value
+  getWriteTweetValue() {
+    return this.refs.writeTweet.value
   }
 
   handleKeyUp() {
-    let tweet = this.getNewTweetValue();
+    let tweet = this.getWriteTweetValue();
     console.log(tweet);
     console.log(tweet.length);
   }
 
-  openModal() {
+  openModal(evt) {
+    evt.stopPropagation();
     this.setState({modalIsOpen: true});
-    setTimeout(()=>document.querySelector('.new-tweet-text').focus());
+    setTimeout(()=>document.querySelector('.write-tweet-text').focus());
   }
 
   closeModal() {
@@ -65,23 +58,24 @@ export default class NewTweet extends Component {
   }
 
   render() {
+    const icon = (this.props.replyTweet) ? <TiArrowBack className="reply-icon" onClick={this.openModal.bind(this)} data-tip="Reply to this tweet"/> : <TiEdit className="write-tweet-icon" onClick={this.openModal.bind(this)} data-tip="Write a new tweet"/>;
     return (
-      <div className="new-tweet">
-        <TiEdit className="new-tweet-icon" onClick={this.openModal} data-tip="Write a new tweet"/>
+      <div className="write-tweet">
+        {icon}
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={customStyles} >
 
-          <div className="new-tweet-modal">
-            <label htmlFor="newTweet">Tweet</label>
-            <textarea name="newTweet"
-                      className="new-tweet-text"
-                      id="newTweet"
-                      ref="newTweet"
+          <div className="write-tweet-modal">
+            <label htmlFor="writeTweet">Tweet</label>
+            <textarea name="writeTweet"
+                      className="write-tweet-text"
+                      id="writeTweet"
+                      ref="writeTweet"
                       onKeyUp={this.handleKeyUp}></textarea>
           </div>
-          <footer className="new-tweet-modal-footer">
+          <footer className="write-tweet-modal-footer">
             <button type="button" className="btn btn-primary" onClick={this.handleTweet.bind(this)}>Tweet</button>
             <button type="button" className="btn" onClick={this.closeModal}>Cancel</button>
           </footer>

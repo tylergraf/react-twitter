@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import {Link} from 'react-router'
-// import NewTweet from './NewTweet';
+import WriteTweet from '../twitter/WriteTweet';
 
 
 export default class Header extends Component {
@@ -9,11 +9,11 @@ export default class Header extends Component {
   }
 
   render() {
-    // <NewTweet />
     return (
       <header>
         <div className="header-upper">
           <h1>Twitters</h1>
+          <WriteTweet />
         </div>
         <nav>
           <Link to="/">Home</Link>

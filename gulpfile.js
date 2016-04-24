@@ -22,7 +22,7 @@ gulp.task('serve', function () {
   nodemon({
     script: './server.js',
     ext: 'js html',
-    ignore: ['app','node_modules'],
+    ignore: ['src','node_modules','static'],
     env: { 'NODE_ENV': 'development' }
   })
 });

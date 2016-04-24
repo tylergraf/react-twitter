@@ -5,7 +5,6 @@ export default class TweetText extends Component {
   constructor(props){
     super(props);
     // debugger;
-    console.log(props);
   }
 
   replaceUrls(text, urls){

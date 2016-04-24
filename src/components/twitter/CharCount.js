@@ -15,7 +15,7 @@ const customStyles = {
     transform             : 'translate(-50%, -50%)'
   }
 };
-export default class NewTweet extends Component {
+export default class WriteTweet extends Component {
   constructor(props){
     super(props);
 
@@ -26,7 +26,7 @@ export default class NewTweet extends Component {
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleKeyUp = this.handleKeyUp.bind(this);
-    this.getNewTweetValue = this.getNewTweetValue.bind(this);
+    this.getWriteTweetValue = this.getWriteTweetValue.bind(this);
   }
 
   handleRetweet(evt){
@@ -49,12 +49,12 @@ export default class NewTweet extends Component {
 
   }
 
-  getNewTweetValue() {
-    return this.refs.newTweet.value
+  getWriteTweetValue() {
+    return this.refs.WriteTweet.value
   }
 
   handleKeyUp() {
-    console.log(this.getNewTweetValue());
+    console.log(this.getWriteTweetValue());
   }
 
   openModal() {
@@ -67,17 +67,17 @@ export default class NewTweet extends Component {
 
   render() {
     return (
-      <div className="new-tweet">
-        <TiEdit className="new-tweet-icon" onClick={this.openModal} data-tip="Write a new tweet"/>
+      <div className="write-tweet">
+        <TiEdit className="write-tweet-icon" onClick={this.openModal} data-tip="Write a new tweet"/>
         <Modal
           isOpen={this.state.modalIsOpen}
           onRequestClose={this.closeModal}
           style={customStyles} >
 
-          <div className="new-tweet-modal">
-            <textarea name="newTweet"
-                      id="newTweet"
-                      ref="newTweet"
+          <div className="write-tweet-modal">
+            <textarea name="WriteTweet"
+                      id="WriteTweet"
+                      ref="WriteTweet"
                       onKeyUp={this.handleKeyUp}></textarea>
           </div>
           <button className="btn" onClick={this.closeModal}>Cancel</button>

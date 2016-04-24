@@ -35,9 +35,20 @@ h4 {
   flex-direction: column;
   align-items: center;
 }
-.tweets .tweet {
+.tweets .tweet-wrapper {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
   border-bottom: 1px solid #ddd;
   padding: 10px;
+}
+.tweets .tweet-wrapper .retweeted-by {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  padding-bottom: 10px;
+}
+.tweets .tweet {
   display: flex;
   display: -webkit-flex;
   flex-direction: row;
@@ -103,29 +114,6 @@ h4 {
   font-weight: 500;
   font-size: 12px;
 }
-.new-tweet .new-tweet-icon {
-  width: 30px;
-  height: 30px;
-}
-.new-tweet-modal {
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-}
-.new-tweet-modal .new-tweet-text {
-  width: 300px;
-  height: 100px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  resize: none;
-}
-.new-tweet-modal-footer {
-  margin-top: 10px;
-  display: flex;
-  display: -webkit-flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
 .tweet-footer {
   display: flex;
   display: -webkit-flex;
@@ -180,4 +168,28 @@ h4 {
   fill: #777;
   width: 30px;
   height: 30px;
+}
+.write-tweet .write-tweet-icon {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.write-tweet-modal {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+}
+.write-tweet-modal .write-tweet-text {
+  width: 300px;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: none;
+}
+.write-tweet-modal-footer {
+  margin-top: 10px;
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

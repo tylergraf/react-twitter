@@ -26,6 +26,9 @@ export default {
             item: item
         } )
     },
+    writeTweet(status, replyId){
+      dispatch({actionType: AppConstants.WRITE_TWEET, status, replyId})
+    },
     likeTweet(id){
       dispatch({actionType: AppConstants.LIKE_TWEET, id})
     },

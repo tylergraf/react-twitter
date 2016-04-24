@@ -12,7 +12,7 @@ export function getTimeline(username){
   return call.then((data) => ({tweets: data.data}))
 }
 
-export function newTweet(tweet){
+export function WriteTweet(tweet){
   return axios.post('/api/tweet', {tweet});
 }
 

@@ -65,6 +65,13 @@ const AppStore = Object.assign(EventEmitter.prototype, {
         CartAPI.decreaseItem( payload.item );
         break;
 
+      case AppConstants.WRITE_TWEET:
+        TwitterAPI.writeTweet(payload.status, payload.replyId)
+          .then(tweet => dispatch({actionType: AppConstants.api.RECEIVE_TWEETS, tweets: [tweet]}))
+          .catch(err => console.log(err))
+
+        break;
+
       case AppConstants.LIKE_TWEET:
         _tweets.forEach(tweet => {
           if(tweet.id_str === payload.id){
@@ -73,9 +80,8 @@ const AppStore = Object.assign(EventEmitter.prototype, {
           }
         });
         TwitterAPI.likeTweet(payload.id)
-          .then(tweet => {
-            dispatch({actionType: AppConstants.api.UPDATE_TWEET, tweet});
-          }).catch(err => console.log(err))
+          .then(tweet => dispatch({actionType: AppConstants.api.UPDATE_TWEET, tweet}))
+          .catch(err => console.log(err))
 
         break;
 

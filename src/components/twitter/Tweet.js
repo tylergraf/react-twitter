@@ -7,8 +7,9 @@ import Retweet from './Retweet';
 import Moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 import Modal from 'react-modal';
-import {TiArrowBack} from 'react-icons/lib/ti';
+import {TiArrowRepeat} from 'react-icons/lib/ti';
 import AppActions from '../../actions/app-actions';
+import WriteTweet from './WriteTweet';
 
 const customStyles = {
   content : {
@@ -63,8 +64,28 @@ export default class Tweet extends Component {
     AppActions.unretweetTweet(this.props.tweet.id_str);
   }
   render() {
-    const { text, user, created_at, extended_entities} = this.props.tweet;
+    const isRetweet = this.props.tweet.is_quote_status;
 
+    if(isRetweet){
+      var retweetedBy = (<div className="retweeted-by">
+        <TiArrowRepeat />
+        <div>Retweeted by {this.props.tweet.user.name}</div>
+      </div>);
+    }
+
+
+    if(this.props.tweet.retweeted_status){
+      var { text, user, created_at, extended_entities} = this.props.tweet.retweeted_status;
+    } else if(this.props.tweet.quoted_status){
+      var { text, user, created_at, extended_entities} = this.props.tweet.quoted_status;
+    } else {
+      var { text, user, created_at, extended_entities} = this.props.tweet;
+    }
+
+    //
+    // if(this.props.tweet.is_quote_status){
+    //   debugger;
+    // }
     let img;
 
     if(extended_entities){
@@ -80,49 +101,52 @@ export default class Tweet extends Component {
     }
 
     return (
-      <div className="tweet" onClick={this.openModal}>
-        <ReactTooltip effect="solid" delayShow={300} />
-        <div className="avatar">
-          <img src={user.profile_image_url} alt={user.screen_name} />
-        </div>
-        <div className="tweet-content">
-          <div className="user">
-            <h3 className="name"><Link to={`/user/${user.screen_name}`}>{user.name}</Link></h3>
-            <Link to={`/user/${user.screen_name}`} className="username">@{user.screen_name}</Link>
-            <span>&nbsp;•&nbsp;</span>
-            <div>
-              <a href="" className="tweet-date" data-tip={Moment(created_at).format('HH:mma - MMM DD YYYY')}>{Moment(created_at).fromNow()}</a>
-            </div>
+      <div className="tweet-wrapper" onClick={this.openModal}>
+        {retweetedBy}
+        <div className="tweet">
+          <ReactTooltip effect="solid" delayShow={300} />
+          <div className="avatar">
+            <img src={user.profile_image_url} alt={user.screen_name} />
           </div>
-          <TweetText tweet={this.props.tweet}></TweetText>
-          {img}
-          <footer className="tweet-footer">
-            <div className="reply">
-              <TiArrowBack className="reply-icon" data-tip="Reply to this tweet"/>
-            </div>
-            <Favorite likeHandler={this.likeTweet.bind(this)} unlikeHandler={this.unlikeTweet.bind(this)} tweet={this.props.tweet} />
-            <Retweet retweetHandler={this.retweetTweet.bind(this)} unretweetHandler={this.unretweetTweet.bind(this)} tweet={this.props.tweet} />
-
-            <Modal
-              isOpen={this.state.modalIsOpen}
-              onRequestClose={this.closeModal}
-              style={customStyles} >
-
-              <div className="tweet-content">
-                <div className="user">
-                  <h3 className="name"><Link to={`/user/${user.screen_name}`}>{user.name}</Link></h3>
-                  <Link to={`/user/${user.screen_name}`} className="username">@{user.screen_name}</Link>
-                  <span>&nbsp;•&nbsp;</span>
-                  <div>
-                    <a href="" className="tweet-date" data-tip={Moment(created_at).format('HH:mma - MMM DD YYYY')}>{Moment(created_at).fromNow()}</a>
-                  </div>
-                </div>
-                <TweetText tweet={this.props.tweet}></TweetText>
-                {img}
+          <div className="tweet-content">
+            <div className="user">
+              <h3 className="name"><Link to={`/user/${user.screen_name}`}>{user.name}</Link></h3>
+              <Link to={`/user/${user.screen_name}`} className="username">@{user.screen_name}</Link>
+              <span>&nbsp;•&nbsp;</span>
+              <div>
+                <a href="" className="tweet-date" data-tip={Moment(created_at).format('HH:mma - MMM DD YYYY')}>{Moment(created_at).fromNow()}</a>
               </div>
-              <button onClick={this.closeModal}>close</button>
-            </Modal>
-          </footer>
+            </div>
+            <TweetText tweet={this.props.tweet}></TweetText>
+            {img}
+            <footer className="tweet-footer">
+              <div className="reply">
+                <WriteTweet replyTweet={this.props.tweet}/>
+              </div>
+              <Favorite likeHandler={this.likeTweet.bind(this)} unlikeHandler={this.unlikeTweet.bind(this)} tweet={this.props.tweet} />
+              <Retweet retweetHandler={this.retweetTweet.bind(this)} unretweetHandler={this.unretweetTweet.bind(this)} tweet={this.props.tweet} />
+
+              <Modal
+                isOpen={this.state.modalIsOpen}
+                onRequestClose={this.closeModal}
+                style={customStyles} >
+
+                <div className="tweet-content">
+                  <div className="user">
+                    <h3 className="name"><Link to={`/user/${user.screen_name}`}>{user.name}</Link></h3>
+                    <Link to={`/user/${user.screen_name}`} className="username">@{user.screen_name}</Link>
+                    <span>&nbsp;•&nbsp;</span>
+                    <div>
+                      <a href="" className="tweet-date" data-tip={Moment(created_at).format('HH:mma - MMM DD YYYY')}>{Moment(created_at).fromNow()}</a>
+                    </div>
+                  </div>
+                  <TweetText tweet={this.props.tweet}></TweetText>
+                  {img}
+                </div>
+                <button onClick={this.closeModal}>close</button>
+              </Modal>
+            </footer>
+          </div>
         </div>
       </div>
     )
